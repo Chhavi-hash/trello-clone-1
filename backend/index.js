@@ -4,29 +4,44 @@ require('dotenv').config();
 
 const app = express();
 
-// Middlewares
-app.use(cors());
+// ✅ CORS FIX (IMPORTANT FOR VERCEL)
+app.use(cors({
+  origin: [
+    "http://localhost:5173", // local
+    "https://trello-clone-1-awom.vercel.app" // your deployed frontend
+  ],
+  credentials: true
+}));
+
 app.use(express.json());
 
-// ✅ Test Route (IMPORTANT)
-app.get('/', (req, res) => {
-  res.send('Backend is running 🚀');
+// ✅ TEST ROUTE (IMPORTANT)
+app.get("/", (req, res) => {
+  res.send("API is running 🚀");
 });
 
-// ✅ API Routes
+// ✅ HEALTH CHECK (Render uses this)
+app.get("/healthz", (req, res) => {
+  res.send("OK");
+});
+
+// ✅ ROUTES
 app.use('/api', require('./src/routes'));
 
-// ✅ Global Error Handler
+// ✅ GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error(err);
   res.status(500).json({
-    success: false,
-    message: err.message || 'Internal Server Error'
+    error: {
+      code: 'INTERNAL_ERROR',
+      message: err.message
+    }
   });
 });
 
-// ✅ Server Start
+// ✅ PORT FIX (VERY IMPORTANT FOR RENDER)
 const PORT = process.env.PORT || 5001;
+
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
