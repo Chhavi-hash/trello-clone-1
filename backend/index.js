@@ -9,7 +9,8 @@ app.use(cors({
   origin: [
     "http://localhost:5173",
     "https://trello-clone-1-awom.vercel.app",
-    "https://trello-clone-1-p6t1.vercel.app"
+    "https://trello-clone-1-p6t1.vercel.app",
+    "https://trello-clone-1-p6t1-git-main-chhavi-hashs-projects.vercel.app"
   ],
   credentials: true
 }));
