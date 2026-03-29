@@ -7,8 +7,9 @@ const app = express();
 // ✅ CORS FIX (IMPORTANT FOR VERCEL)
 app.use(cors({
   origin: [
-    "http://localhost:5173", // local
-    "https://trello-clone-1-awom.vercel.app" // your deployed frontend
+    "http://localhost:5173",
+    "https://trello-clone-1-awom.vercel.app",
+    "https://trello-clone-1-p6t1.vercel.app"
   ],
   credentials: true
 }));
